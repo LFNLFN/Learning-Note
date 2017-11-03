@@ -1,0 +1,95 @@
+下载git，官网下载，是一个命令行工具，相比较于cmd，它的优越之处是可以在你所在的当前目录下用鼠标右键，执行Git Bash Here命令，这样命令行的起点就是当前目录了。在win7的命令行下，命令行开头自带有一个$，只需要输入后面部分即可。
+
+cd filename //进入某个目录   cd.. //返回上一级目录   ls //查看当前目录下的文件列表		mkdir filename //当前目录下生成一个文件夹
+git clone url //克隆一个库    按table键会自动补全命令
+进入项目目录下的操作才能被git跟踪
+
+	设置项目作者信息，因为后期提交时能知道谁做的，如果一人分饰两角，那么换身份修改前要调用下面指令改变用户名和邮箱，而git的作者信息改好后还要记得在github-desktop改github的远程仓库地址
+	git config --global user.name "name here"
+	git config --global user.email "name here"
+	git config --list 列表形式查看git-config配置
+
+	查看暂存区和工作区的状态，比如说里面有什么文件
+	git status  返回你所在的分支位置，以及工作区是否有修改
+	注意master后面[+2 ~0 -0 !]表示增加了两个新文件到工作区，修改0个文件，删除0个文件，没有冲突--注意红色是工作区，绿色是暂存区，也可以用于判断当前位置
+
+	git add filename / . (有修改的工作区文件全部暂存)
+		如果用status查看到有新文件，用add添加文件到追踪列表，也就是添加到暂存区。
+	git commit
+		-m 输入后直接在后方""内写入注释说明即可
+		-a 从工作区到暂存区再到仓库，省略add操作
+		-a -m  
+		add完之后就能commit，commit时会弹出输入本，输入提交说明
+
+
+	git log 查看提交历史，如果历史太多，在最下面继续回车就能查看更多，按Q键就能退出历史器
+
+	对比：
+		git diff    //指工作区和暂存区的不同，绿色是增加的内容 
+			--cached(--staged) //暂存区和版本区的对比，前后写法两者效果相同
+			<branchname>(master) //直接对比工作区和版本库
+
+	撤销： 
+		git reset HEAD filename ~~把暂存区文件退回工作区
+		git checkout -- filename ~~把版本区当前状态用在已变化的工作区中，前提是暂存区没有修改状态，否则会优先从暂存区开始覆盖
+		git commit --amend  ~~把上一次的提交撤销，同时提交这次与上一次暂存的内容，amend写最后
+
+	删除：
+		git rm filename //工作区的某个文件被删后后，此指令可用于删除暂存区的那个文件。如果工作区还有那个文件，指令执行后会报错
+		git rm -f filename //同时删除工作区和暂存区目标文件，不管工作区有没有
+		git rm  --cached filename //只删除暂存区而保留工作区文件
+
+	恢复：
+		git checkout 《commit_id》 filename  //恢复在工作区被删除的文件到某个指定版本，也就是对指定文件的恢复
+		git reset --hard 《commit_id》  //全部被追踪文件恢复到指定版本
+						>> HEAD^    //版本指针退回到当前的前一个版本
+						>> HEAD~<num>   //回到前num个版本
+		git reflog
+		返回你的操作历史，里面有操作id，找到id后用git reset --hard 《commit_id》恢复就好
+
+
+	远程仓库： --请求时间过长也可能导致请求失败
+		git remote  //查看当前链接的远程仓库的名字,通过git remote add可以改
+			-v  //查看远程仓库对应的地址
+			origin //clone时默认的远程仓库名字
+		git push origin（同步到远程库的名字） master（同步到远程库的分支）
+		多人协作解决冲突： 在协作开发前先同步最新版本到本地，避免冲突
+		    --对于已克隆的仓库进行更新即可
+			git fetch
+				git diff master origin/master   //会在命令行工具打印出红绿区别
+				git merge orgin/master   //运行后会有<<<<HEAD ... >>>>origin/master  出现在本地文件的代码冲突处，两个冲突会显示，这时就可以比较清晰地进行比较，删掉你不要的部分，再在命令行commit -a ，再git push origin master就行
+			git pull 
+				获取远端版本并自动合并本地版本，但如果没有搞清楚远近版本区别的话很容易出现冲突问题，所以一般推荐先fetch查看区别，不过直接pull也行，只是强制合并并且以远端库版本为准而已
+
+
+	开源项目协作：  --一般没有写的权限，但可以投稿
+		fork    //镜像目标库到你的名下
+		pull request	//看github界面step by step，小修改也可以先fork然后直接在github网上按那支笔（exit），下方提交，再pull request，当然，修改完的fork仓库一般就可以删掉了
+
+
+	git分支  -- [master]代表当前所在分支，把分支名当做指针
+		git branch  // 返回所有分支名字，名字前如果有*代表是当前分支，直接加名字就能创建新分支
+
+			-d  // 后加要删除的分支名字，但只能删除已合并的分支，d换大写可以强制删除
+
+			--merged  // 返回当前分支以及与当前分支合并了(merged)的分支
+			--no-merged  //// 返回与当前分支没有合并(merged)的分支
+
+		git checkout  //加分支名字即可跳跃至那个分支
+			-b  // 再加分支名，意思是创建并跳到那个分支
+
+		git merge  //进入容纳分支，后加合并分支名，返回fast-forward（一个快速合并的方式），即可。
+		一般来说合并过去的分支就可以删掉了，因为多余了嘛 ;   合并时发生冲突，可用git status查看冲突源，然后在文件里面手动选择后保存（此时相当于成功合并了），再提交即可。
+
+
+		创建github上的分支
+			本地创建然后git push
+			github上直接创建：在网页上的分支选择器里头选择即可
+
+		github上的标签（标签写法例如v1.0）  ：release表示项目的里程碑，打标签用的，可以进入其中下载指定版本
+			git tag  // 查看已有标签
+				- v1.0  // 添加标签
+			----然后再 git push origin v1.0  //个人理解是tag用来为一个分支命名 
+
+			github上直接创建 
+				点击（Draft a new release)

@@ -1,0 +1,50 @@
+这时本地blog环境就搭建好了。
+
+接下来就可以全局下载hexo，再次出现输入行后输入hexo，如果出现commands和global option两个大框的键值对就说明，下载好了之后如果hexo需要初始化（而我不知为何是不需要的），执行hexo init。到这里，blog文件夹就是我的博客根目录，git操作在这里完成。
+
+然后hexo generate 生成静态页面，此操作会在blog目录生成一个public目录（命令行出现很多info）。
+在接着hexo server 启动本地服务器。（也会出现两个info，若要配置则用ctrl+c关闭服务器，这句成功了那么你的博客可以在本地登录）
+然后hexo deploy发布（作用是自动发布到你repo那个仓库里，在浏览器打开前做这一步）
+浏览器输入http://localhost:4000打开。
+
+环境配置：
+找到那个_config.yml（配置文件）把repo项（位于配置文件最下方）改成自己的github库(..io.git)。搞清楚配置项的意思以后改
+
+_post文件夹里面是JZ的博文。
+
+
+
+
+
+
+
+力所能及总结的一些git错误信息：
+
+1.acer@acer-PC MINGW32 /d/FRONT/blog/项目源码/blog
+$ npm install --save-dev
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.1: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"ia32"})
+错误原因：很明显，那就是我没注明自己要install什么，所以错误信息也大概是说我跳过了一个应该要被选择的选项....哎有些不知所云，不知道是英文太差还是它有些阅读障碍，反正直译是很难了。另外一个注意点就是fsevents，这个东西是mac osx系统的，其它操作系统运行会有警告，不过对项目没什么影响。然后两句话貌似是会时常连在一起出现。补充：后来又发现就算是一开始用npm install加载项目包时也会有这段话，不过之前会有加载包的相关信息出现，比如文件名和文件目录。
+
+2.warning: LF will be replaced by CRLF in 2016/07/28/移动开发实践总结/index.html.
+a)	LF 就是line-feed（换行），CR就是Carriage-Return（回车），CRLF只会在window出现，标志一行的结束，而linux只会有LF，一般是系统对进行字符转换时发生的错误。
+
+3.src refspec HEAD does not match any. ||failed to push some refs to ..可能是仓库分支的问题，暂无能力探究，
+
+
+
+
+
+Npm
+Install：一般在下载npm时会在git的当前目录自动生成一个node_modules文件夹，这个文件夹用来存放被下载的当前项目的包，只有这个从项目可以访问到。相对的有一个全局目录，一般用来存放工具模块（包），例如eslint、gulp。
+Npm install <packageName> -g  
+Npm install <github代码库地址>  
+例如 npm install git://github.com/package/path.git
+参数所在处加入--save或者--save-dev 分别把包保存到dependencies和devDependencies.
+
+config:
+$ npm config set registry https://registry.npm.taobao.org
+     $ npm config get registry
+在博客写文章：
+第一步，在git中输入 hexo new <题目> 就行了。
+题目前可以选择布局参数，post是默认的，就是把文章放到_post文件夹中；draft是草稿，并不会显示在博客中，但可以用publish命令把草稿移动到post中。--draft 执行时预览草稿。

@@ -1,0 +1,172 @@
+官网：www.jquery.com;  使用:在script中的src中引入
+
+
+JQ元素节点操作及属性读写：
+	可与js混用，但在同一语句中不能。
+	$('li').html()  //在一组li里面只会读取第一个的值。赋值是所有。
+	$(function() {})  =  window.onload
+	has() 选择包含某类元素的元素
+	not() & filter() 相反
+	next()/prev() 上一个或者下一个元素节点
+	find() 返回某父元素中的指定子元素
+	eq() 传入数组下标
+	index() 当前元素在兄弟节点的顺序位置，0开始。
+	attr() 元素属性读写
+	addClass('class1 class2')  +   removeClass('cls1,cls2')
+	remove(),不传参，删除前方节点
+	$(window) window对象
+	创建标签  var aaa = $('<div>') / $('<div>ff</div>')
+
+	inner/outer/Width(),width()  长度返回值没有单位，只认像素。--width,w+pad.w+p+border,w+p+b+mar(outerWidth(true))
+
+	insertBefore()/before() 动词/判断，区别体现在后续操作 下面类似
+	appendTo()/prependTo()
+
+	on/off('event1 event2','func')  监听原有事件及自定义事件
+	$().on({
+		'click' : function1,
+		'mouseover' : function2
+	})
+	$().on('click', function(){
+		......
+		$().off();
+	})    //使这个函数只执行一次，通过对off传参可以指定取消的事件侦听器
+
+	scrollTop() / scrollLeft() 滚动距离，无单位
+
+	-----------------------------------------------------------------------
+	function(ev){}  //ev是不需兼容的
+	ev.pageX(相对于文档) : clientX(相对于可视区)
+	ev.which 找使用的键值
+	ev.preventDefault(); ev.stopPropagation();  return false等于两者结合
+	one() 代替on(off()) 代表只执行一次
+	$().offset().left  //获取当前元素到屏幕的左距离(body)
+	$().position().left //当前元素到最近有定位元素的距离，margin不会计入
+	parent() - 获取父级  /  offsetParent() - 获取有定位的父级
+	val() 获取当前元素的value值
+	size() 相当于length
+	$('li').each(function(i,elem){
+		$(elem).html(i);
+	}) //for循环类似物，i是下标，elem是当前遍历的节点之一
+
+	$().hover(fn1,fn2); 移入和移出处理程序
+
+	$().show() / .hide()  //可接收参数毫秒，表示变化时长。右下角到左上角
+
+	$().fadeIn() / fadeOut()  //淡入淡出 透明度 可传参毫秒
+	$().fadeTo(1000,0.5) 
+
+	$().slideUp()/slideDown()  //上下展开收缩
+
+	$().get(index).innerHTML  //get()把JQ转成原生JS
+	for (var i=0; i<$('li').get().length; i++;) {}  //get无参数转出集合
+	text() //获取集合所有节点的文本，不包括标签;输入也会把标签变字符串
+
+	remove() 返回值是该节点，但事件没了 ///// detach() 却能保留操作行为
+
+	$(function(){})  与window.onload相比这个方法只需dom加载完就能执行，具体来说比如不必等图片和falsh加载完，提升网页载入速度，原生是DOMContentLoaded,但兼容不容易，  ----同时以上方法是$(document).ready(function(){})的简写
+
+	parents() 当前元素的所有祖先节点，可传入指定节点，比如('body') .class1/#id1
+	closest() 类似上面，不过必须传入参数，包括当前元素自身，只返回一个元素
+	siblings() 当前元素的所有兄弟节点，不包括自身,参数类似上方
+		nextAll() 后面的所有兄弟
+		prevAll() 前面兄弟
+
+	parentsUntil() nextUntil() prevUntil() 类似上面，截止，不包括当前节点
+
+	clone() 复制而非剪切 $().clone().appendTo('');  参数作用是复制元素的操作行为 clone(true)
+
+	$(span).wrap('<div>') 用一个div包裹一个span
+		$(span).wrapAll('<div>') 用一个div包住全部span，可能导致元素排序变化
+		$(span).wrapInner('<div>') 用一个span包裹一个div
+		$(span).unwrap() 删除除了body的祖先元素
+
+	$('div').add('span')  个人理解是数组的组合
+		$('div').slice(1,4)
+
+	数据串联化（针对表单操作）,生成提交URL数据字符串：$('form').serialize();
+		$('form').serializeArray() 生成包含对象的数组
+----------------------------------------------------------------------
+
+JQ运动效果
+	animate()   --$().animate({width : 300 , height : 300});
+				第一个参数是对象，里面存放运动的键值对，如需分开，写两次animate(),先写先动
+				第二个参数是时间，默认400
+				第三个参数是加速度，默认'swing'慢快慢 'linear'匀速
+				第四个参数是回调函数，
+	stop()
+		参数一：传入true可阻止所有后续动画，不传只阻止最近一个操作；
+		参数二：传入true能让最近一个运动马上到终点。可以用finish()立即停止于所有目标点
+	
+JQ事件委托
+	delay()
+		animate().delay(1000).animate() //前后效果间隔
+	delegate() / undelegate()
+		$('ul').delegate('li','click',function(){
+			//this -- ul
+			this.style.background = 'red';
+
+			$('ul').undelegate();
+		})
+	trigger()
+		$().trigger('event') //主动触发，适合自定义事件
+
+	ev.data --  $('#div1').on('click',{name:'hello'},function(ev){
+		alert(ev.data.name);  //返回hello
+	})
+		ev.target
+		ev.type
+
+--------------------------------------------------
+$下的常用方法  --$().css()... 后面方法只能用于JQ对象///而$.xxx()可以JQ/原生两用称为工具方法
+
+	type() //typeof的升级版，能区分数组、null、对象
+	trim() //去除空格
+	inArray('b',arr);
+	proxy() :改变this指向
+		$.proxy(fn , document, x, y)(/x,/y)
+
+	noConflict()  //防止其它数据使用$造成命名冲突
+		var miaov = $.noConflict();  //后面就可以把miaov替换$
+	parseJSON() //相当于JSON.parse()
+	makeArray() //把类数组(getTagName)转成真数组
+
+---------------------------------------------
+$-AJAX方法  详细内容可在官网的API-DOC查
+	$.ajax({
+		url : 'xxx.php',
+		data : 'name=leo&age=20',
+		type : 'POST'/'GET',
+		success : function(data) {
+			alert(data);
+		},
+		error : function(){
+			alert('Wrong!');
+		},
+		contentType:,
+		dataType:,
+		cache:,
+		timeout:
+	})
+
+	$.get('xxx.php',[name:'Leo'],function(){})
+	$.post('xxx.php',[name:'Leo'],function(){})
+	$.getJSON('xxx.php?callback=?',function(data){
+		data
+	}) //？代表生成一个随机函数名字，当然也可以指定
+
+----------------------------------------------------
+JQ插件
+	$.extend  : 工具方法下的插件 $.xxx()
+		$.extend({ 
+		leftTrim : function(){
+			return str.replace(/^\s+/,'');
+		},
+		rightTrim:  })
+	$.fn.extend  :  JQ对象下的插件 $().xxx()
+		$.fn.extend({
+			name:func  
+		})
+
+----------------------------------------------------------
+

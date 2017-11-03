@@ -1,0 +1,60 @@
+作业内容：
+    瀑布流：一种数据展现形式
+    应用实例：蘑菇街和百度图片
+    分批加载，设定满足条件
+    应用例子：网易滚动新闻，手机号验证
+
+
+一. 环境准备：
+安装： www.php100.com    ------WampServe
+写好文件默认放到文件夹WWW，可以直接由菜单跳过去。熟悉配置的话可以自己调整。
+
+127.0.0.1 本机ip 浏览器输入就是等于访问WWW文件夹 或者localhost
+
+用ws时不要开迅雷或者在线播放器，浏览器，否则默认的80端口有可能被占用从而出现问题。
+但开启后再打开应该没有问题，外在影响因素很多，做好心理准备。
+
+二. 使用过程
+1.xhr.responseText  //ajax请求返回的内容就存放于此属性下，格式为字符串。
+
+2.表单提交操作
+<form enctype = "提交的数据格式(一般是默认的)"  action=“数据提交到的页面地址（本页面）"  method="提交方式（get）"></form>
+///enctype="application/x-www-form-urlencoded"
+enctype就是用来告诉后端 数据的格式，使数据得以显示，否则后端不会处理数据，因为就算
+是a，在不同的格式中也会有不同的含义。
+
+3.responseText返回字符串
+
+4.json的作用就是方便后端与前端交流数据。json.org/
+  javascript-json: 当语言不支持与json互转时下载对应代码包，保存为JSON.js，
+  为了解决老版本IE的兼容问题。否则浏览器直接有内置JSON对象。
+
+5.get&post
+对于get，提交数据后：原页面/1.get.php?username=aaa&age=30  会显示于新页面的地址栏中，
+通过更改aaa或30可以改变显示结果/////后端也要用get接收，前后名称对应。
+url有长度限制，不能用get传过多的数据，get传递数据的类型只有字符串，post可以很多。
+
+对于post，后端书写时只需替换GET的位置，，提交数据后地址栏不会显示？后面的东东，
+而数据的传递是通过‘请求头’实现的，通过F12里面的network（网络监控）可以看到请求的信息.
+
+点开记录能开到数据内容，再点Headers能看到里面有一个‘Request Header’在里面可以看到
+很多数据传递时的额外信息，比如在User-Agent里可以知道我用的浏览器及其版本等等，
+Referer可以看到前一个页面地址，///Form Data里面可以看到username和age，但那是
+解析后的格式，你可以看view parsed查看原格式，然后发现post and get的串联方式是一样的，
+但发送方式不同（？？）
+
+6.数据传输方面
+相同的地址用浏览器去看和AJAX去获取其实都是后端echo后面的内容，因此可以先在浏览器输入地址看看
+echo "你的名字 ： {$username} , 年龄 ：{$age}" ;
+前端输入数据传入后端接口，与echo内容组合成结果返回，‘接口’应该为{}里面，在get方式的url
+后面  ？username=leo&age=30 将数据传过去。
+
+get传输时可能有缓存问题（post没有），在network里可以看到缓存地址，解决方法是   ？username=leo&age=30&‘ +new Date().getTime()
+get传输中文刘伟可能会有乱码问题，   ？username='+encodeURI(刘伟)+'&age=30&‘ +new Date().getTime()
+xhr.setRequestHeader( 'content-type' , 'application/x-www-form-urlencoded' ) ;
+
+
+7.JSONP
+	跨域请求错误提示：'Access-Control-Allow-Origin'.....Origin 'http://localhost' is therefore not allowed access. ~白名单之类
+
+	基本步骤：全局作用域中加两个script标签，一个设置回调函数，另一个的src使用api获取返回数据（在事件监听后动态创建）

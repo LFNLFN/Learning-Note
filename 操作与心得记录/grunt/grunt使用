@@ -1,0 +1,8 @@
+grunt is build tool 用来自动完成压缩和编译等工作
+
+grunt-cli -g  （gruntjs.com）/ <grunt>  >> Gruntfile.js
+
+	npm i yo -g  //YEOMAN <yo -v> (http://yeoman.io)---生成项目文件结构,选择生成器
+		generator:  i generator-name   >>用法：yo webapp foldername
+
+	i bower -g  (bower.io) <bower -v> ---跟踪管理web的框架、库、公共部分等，比如说要改库的版本，就在bower里面改就行
