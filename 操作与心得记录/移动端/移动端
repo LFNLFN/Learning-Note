@@ -1,4 +1,23 @@
-1.移动端开发加强，毕竟比重越来越大了。内容有响应式布局，掌握的点有
+# 老黄语录
+
+1. 移动端开发加强，毕竟比重越来越大了。内容有响应式布局，掌握的点有
 viewport设置，css单位（px，%，rem等），媒体查询@media，flex布局，留意tap事件.
 
-2.zepto可以认为是移动端的jq
+2. zepto可以认为是移动端的jq
+
+
+# 课程笔记
+
+1. window.devicePixelRatio  initial-scale = 1/it
+2. iWidth = document.documentElement.clientWidth   iwidth/16 + 'px' = rem-fontSize  //16 is changable
+3. @media device-name{
+	css-code... 
+	 //当匹配到指定设备时会调用其中样式，覆盖范围若有重叠则使用后出现的~~~~设备名之间可以and not only。
+	 // 花括号之前可以不填设备名，另外还能填一些参数设置，使用时用括号括住，比如min-width | max-width | orientation:portrait | orientation:landscape | -webkit-min-device-pixel-ratio:2
+	 //查询值可以作为字符串传入link标签属性media的值
+	 //@import url("abc.css") all and (min-width:600px);
+}
+4. @import 先处理html结构才加载后面的css | link则是先处理好css，然后随着html一起渲染 --问题是会影响浏览器的并行下载，多个@import可能会导致下载顺序错乱
+
+
+

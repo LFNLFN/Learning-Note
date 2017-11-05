@@ -1,0 +1,47 @@
+# MD语言使用笔记
+Markdown语言学习($ hexo new 静态博客使用感受
+INFO  Created: D:\FRONT\blog\项目源码\blog\source\_posts\2017-04-30-静态博客使用感受.md)
+
+
+
+Md优点：暂时写出突出的，接近纯文本和容易转换为HTML
+
+第一个写作实例(Hello.md)
+Hello
+====
+
+I like [Google](https://www.google.com/)
+
+
+•	a>md文件转换成html5
+pandoc -s --mathml -i -t dzslides test.md -o test.html
+
+Grammar is easy!
+1.paragraph
+段落前后空行
+段落内换行要在前行末尾至少两个空格再换行
+
+2.title
+Setext:
+H1
+=====
+
+H2
+-----
+
+Atx
+#  ##  ### + title (h1,h2,h3....)
+
+3.Quote
+>....
+
+4.List (notice space!)
+Ul: - ...
+Ol:1. ...
+
+--- is fenge line
+
+5.super link
+a.<url>
+b.[google][link]
+  [link]:url ‘title’
