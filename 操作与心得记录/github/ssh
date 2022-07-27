@@ -1,3 +1,5 @@
+https://zhuanlan.zhihu.com/p/99504338
+
 1. download git
 2. check ssh in local: cd ~/.ssh
 3. generate ssh: ssh-keygen -t rsa -C "email@xxx.com"
