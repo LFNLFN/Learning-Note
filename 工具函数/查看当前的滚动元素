@@ -1,0 +1,4 @@
+function findScroller(ele) {
+	ele.onscroll = function() { console.log(ele) }
+	Array.from(ele.children).forEach(findScroller)
+}
