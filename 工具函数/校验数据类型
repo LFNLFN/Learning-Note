@@ -1,0 +1,11 @@
+export const typeOf = function(obj) {
+  return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+}
+
+
+typeOf('哥')  // string
+typeOf([])  // array
+typeOf(new Date())  // date
+typeOf(null) // null
+typeOf(true) // boolean
+typeOf(() => { }) // function
