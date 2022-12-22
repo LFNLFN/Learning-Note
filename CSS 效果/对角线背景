@@ -1,0 +1,6 @@
+.foo {
+  background: linear-gradient(-135deg, #333 45px, transparent 0);
+  // 1. 渐变对称轴角度
+  // 2. 从 #333 渐变到透明色
+  // 3. 颜色后面的距离值指代颜色到对称轴的距离
+}
