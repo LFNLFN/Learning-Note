@@ -1,2 +1,1 @@
-For checking 💡
-For planning 📜
+For checking 💡 & planning 📜
