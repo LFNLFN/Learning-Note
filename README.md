@@ -1,2 +1,2 @@
-# Learning Note
-for checking 💡
+For checking 💡
+For planning 📜
